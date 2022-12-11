@@ -1,0 +1,53 @@
+<div class="showmovies">
+    <div class="container" *ngIf="GenreMovies.length==0">
+        <h4>No Records Found</h4>
+    </div>
+    <div class="container" *ngIf="GenreMovies.length!=0">
+        <br>
+        <div class="row">
+            <div class="col-md-2 alert alert-primary" role="alert">
+                Genre : <b>{{Genre}}</b> 
+            </div>
+            <div class="col-md-2 offset-md-8">
+                <p-button  label="Go Home" routerLink="" icon="pi pi-arrow-left"></p-button>
+            </div>
+            
+        </div>
+        <div class="row" >
+            <div class="col-md-4 mb-3" *ngFor="let item of GenreMovies">
+                <p-card>
+                    <ng-template pTemplate="header">
+                        <div class="row">
+                            <div class="col"><h4>{{item.Title}}</h4></div>
+                            <div class="col-md-1">
+                                <i *ngIf="admin" (click)="Delete(item.Title)" class="pi pi-trash delete"></i>
+                            </div>
+                            <div class="col-md-3">
+                                <i class="pi pi-star-fill"></i>
+                                {{item.imdbRating}}/10
+                            </div> 
+                        </div>
+                    </ng-template>
+                    <img (click)="ShowMovieDetails(item)" src="{{item.Poster}}" 
+                    height="400px" width="350px" alt="{{item.Title}}" style="cursor: pointer;">
+                    <ng-template pTemplate="footer">
+                        <div class="row">
+                            <div *ngFor="let i of item.Genre">
+                            <p-chip label={{i}} styleClass="mr-2"></p-chip>
+                            </div>
+                        </div>
+                    </ng-template>
+                    <p-dialog [(visible)]="display">
+                        <ng-template pTemplate="header">
+                            Warning
+                        </ng-template>
+                        Do you want to delete the movie?<br><br>
+                        <p-button (onClick)="DeleteMovie()" label="Yes" ></p-button>
+    
+                    </p-dialog>
+                </p-card>
+                
+            </div>
+        </div>
+    </div>
+</div>
